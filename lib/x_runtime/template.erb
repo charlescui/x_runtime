@@ -1,0 +1,43 @@
+<html>
+  <head>
+  	<title>XRuntime</title>
+  </head>
+  <body>
+  	<table>
+    <tr>
+      <td>#</td>
+  		<td>Last</td>
+  		<td>URI</td>
+  		<td>Count</td>
+  		<td>Average</td>
+	  </tr>
+    <% num = 0 %>
+  		<% @data.each do |member, hash| %>
+        <% num +=1 %>
+      		<tr>
+            <td><%= num %></td>
+      			<td><%= hash[:latest] %>ms</td>
+      			<td><a href=<%= member %>><%= member %></a></td>
+      			<td><%= hash[:count]%></td>
+      			<td><%= hash[:average]%></td>
+      		</tr>
+  		<% end %>
+    <% num = nil %>
+  	</table>
+    <br/>
+    <br/>
+    <div>
+    <% if @offset - @limit < 0 %>
+      Prev
+    <% else %>
+      <a href="/xruntime?offset=<%=[@offset - @limit, 0].max%>&limit=<%=@limit%>">Prev</a>
+    <% end %>
+    &nbsp-&nbsp-&nbsp
+    <% if @offset + @limit >= @ds.size %>
+      Next
+    <% else %>
+      <a href="/xruntime?offset=<%=[@offset + @limit, @ds.size].min%>&limit=<%=@limit%>">Next</a>
+    <% end %>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+module XRuntime
+  class DataSet
+    
+    def initialize(key, script)
+      raise ArgumentError, "Script must not nil and be valid!" unless script
+      @key = key
+      @key_counter = "#{@key}::Counter"
+      @key_amount = "#{@key}::Amount"
+      @key_average = "#{@key}::Average"
+      @script = script
+    end
+    
+    # {key => {:score => score, :count => count, :average => average}}
+    def latest(opts = {})
+      opts.delete_if{|k,v| v == nil}
+      opts = {:limit => 100, :offset => 0}.update(opts)
+      data = {}
+      key_average = @script.redis
+      .zrevrangebyscore(@key_average, '+inf', '-inf', :limit => [opts[:offset], opts[:limit]], :withscores => true)
+      .inject({}){|hash, array|hash[array[0]] = array[1]; hash}
+
+      if key_average.size > 0
+        key_count = {}
+        keys = key_average.keys
+        @script.redis.hmget(@key_counter, *key_average.keys).each_with_index{|count, idx| key_count[keys[idx]] = count}
+
+        key_average.keys.each do |key|
+          data[key] = {
+            :latest => @script.redis.zscore(@key, key),
+            :count => key_count[key],
+            :average => key_average[key]
+          }
+        end
+      end
+      data
+    end
+    
+    def size
+      @script.redis.zcard(@key)
+    end
+    
+    def add(member, score)
+      @script.evalsha([@key], [member, score])
+    end
+  end#end of DataSet
+end
