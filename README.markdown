@@ -16,7 +16,7 @@ XRuntime是一个Rack的middleware,配合Redis用来分析Http Server每个URI�
 ## Portal
 
 可以访问Http Server的这个URL来实时查看当前记录的请求:[/xruntime](/xruntime)    
-这个页面是按照每个URI执行的平均时间来排行的。
+这个页面是按照每个URI数次执行后的平均时间来排序的。
 
 ## Usage
 
