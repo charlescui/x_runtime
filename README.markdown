@@ -48,11 +48,11 @@ redis-server的版本要大于2.6.0才会支持lua script,可以使用script系�
 
 启动__redis-cli__
 
->redis 127.0.0.1:6380> SCRIPT LOAD "local key = KEYS[1];local path = tonumber(ARGV[1]);redis.call('set',key, path)"
->"dab89791b5a512390f69e1f59eb1753f671b6649"
->redis 127.0.0.1:6380> evalsha dab89791b5a512390f69e1f59eb1753f671b6649 1 hahaha 123456789
->redis 127.0.0.1:6380> get hahaha
->"123456789"
+> redis 127.0.0.1:6380> SCRIPT LOAD "local key = KEYS[1];local path = tonumber(ARGV[1]);redis.call('set',key, path)"
+> "dab89791b5a512390f69e1f59eb1753f671b6649"
+> redis 127.0.0.1:6380> evalsha dab89791b5a512390f69e1f59eb1753f671b6649 1 hahaha 123456789
+> redis 127.0.0.1:6380> get hahaha
+> "123456789"
 
 ## Contributing to x_runtime
  
