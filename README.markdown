@@ -1,6 +1,7 @@
 # x_runtime
 
 XRuntime是一个Rack的middleware,配合Redis用来分析Http Server每个URI请求时长.
+
 由于使用到Redis的**lua script**,所以需要你的Redis服务支持.
 
 版本要求:
@@ -16,6 +17,7 @@ XRuntime是一个Rack的middleware,配合Redis用来分析Http Server每个URI�
 ## Portal
 
 可以访问Http Server的这个URL来实时查看当前记录的请求:[/xruntime](/xruntime)
+
 这个页面是按照每个URI执行的平均时间来排行的。
 
 ## Usage
@@ -25,7 +27,8 @@ XRuntime是一个Rack的middleware,配合Redis用来分析Http Server每个URI�
 1. threshold,表示处理时间超过多少毫秒的请求才会被记录
 2. redis对象
 
-可以指定XRuntime使用的Redis的key前缀或者叫命名空间:`XRuntime::NameSpace = "RuntimeEx::Threshold"`
+可以指定XRuntime使用的Redis的key前缀或者叫命名空间:
+`XRuntime::NameSpace = "RuntimeEx::Threshold"`
 
 ### Sinatra
 
@@ -39,8 +42,10 @@ XRuntime是一个Rack的middleware,配合Redis用来分析Http Server每个URI�
 ### Test
 
 请先修改test/server.rb和test/client.rb中的Redis参数,我的地址是localhost:6380,这个请改为你的地址。
+
     ruby test/server.rb
 	ruby test/client.rb
+	
 执行完毕后可以打开浏览器访问[/xruntime](http://localhost:4567/xruntime),看是否已经准确的记录了一些数据
 
 ## Redis Lua Script
