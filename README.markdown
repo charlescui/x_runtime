@@ -21,6 +21,7 @@ XRuntime是一个Rack的middleware,配合Redis用来分析Http Server每个URI�
 ## Usage
 
 引入这个middleware需要两个参数:
+
 1. threshold,表示处理时间超过多少毫秒的请求才会被记录
 2. redis对象
 
@@ -48,11 +49,11 @@ redis-server的版本要大于2.6.0才会支持lua script,可以使用script系�
 
 启动__redis-cli__
 
-> redis 127.0.0.1:6380> SCRIPT LOAD "local key = KEYS[1];local path = tonumber(ARGV[1]);redis.call('set',key, path)"
-> "dab89791b5a512390f69e1f59eb1753f671b6649"
-> redis 127.0.0.1:6380> evalsha dab89791b5a512390f69e1f59eb1753f671b6649 1 hahaha 123456789
-> redis 127.0.0.1:6380> get hahaha
-> "123456789"
+    redis 127.0.0.1:6380> SCRIPT LOAD "local key = KEYS[1];local path = tonumber(ARGV[1]);redis.call('set',key, path)"
+    "dab89791b5a512390f69e1f59eb1753f671b6649"
+    redis 127.0.0.1:6380> evalsha dab89791b5a512390f69e1f59eb1753f671b6649 1 hahaha 123456789
+    redis 127.0.0.1:6380> get hahaha
+    "123456789"
 
 ## Contributing to x_runtime
  
