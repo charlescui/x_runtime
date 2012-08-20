@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "x_runtime"
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["\u{5d14}\u{5ce5}"]
@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
     "lib/x_runtime/array.rb",
     "lib/x_runtime/data_set.rb",
     "lib/x_runtime/middleware.rb",
+    "lib/x_runtime/portal.rb",
     "lib/x_runtime/redis.lua",
     "lib/x_runtime/script.rb",
     "lib/x_runtime/template.erb",
