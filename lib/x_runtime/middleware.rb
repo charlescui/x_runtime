@@ -33,7 +33,7 @@ module XRuntime
       request_time = (Time.now - start_time).to_f*1000
 
       if request_time >= @threshold
-        logredis(request_time, env['REQUEST_URI'])
+        logredis(request_time, env['REQUEST_URI']) rescue nil
       end
     
       [status, headers, body]
