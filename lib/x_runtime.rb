@@ -10,13 +10,14 @@ $:.unshift(File.dirname(__FILE__))
 
 module XRuntime
   NameSpace = "RuntimeEx::Threshold"
+  
+  autoload :Middleware, "x_runtime/middleware"
+  autoload :DataSet,    "x_runtime/data_set"
+  autoload :Script,     "x_runtime/script"
+  autoload :Portal,     "x_runtime/portal"
+  autoload :Template,   "x_runtime/template"
+  autoload :Utils,      "x_runtime/utils"
 end
-
-XRuntime.autoload :Middleware, "x_runtime/middleware"
-XRuntime.autoload :DataSet,    "x_runtime/data_set"
-XRuntime.autoload :Script,     "x_runtime/script"
-XRuntime.autoload :Template,   "x_runtime/template"
-XRuntime.autoload :Utils,      "x_runtime/utils"
 
 module Rack
   XRuntime = XRuntime::Middleware

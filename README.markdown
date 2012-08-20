@@ -26,7 +26,13 @@ XRuntime是一个Rack的middleware,配合Redis用来分析Http Server每个URI�
 2. redis对象
 
 可以指定XRuntime使用的Redis的key前缀或者叫命名空间:    
-`XRuntime::NameSpace = "RuntimeEx::Threshold"`
+`XRuntime::NameSpace = "RuntimeEx::Threshold"`  
+
+[http://localhost:4567/xruntime](/xruntime)支持Http basic auth验证:
+
+    use Rack::XRuntime, 100, Redis.connect(:url => "redis://localhost:6380/") do |name, password|
+      name == "cui" and password == "hello"
+    end
 
 ### Sinatra
 
