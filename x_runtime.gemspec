@@ -35,7 +35,8 @@ Gem::Specification.new do |s|
     "test/client.rb",
     "test/helper.rb",
     "test/server.rb",
-    "test/test_x_runtime.rb"
+    "test/test_x_runtime.rb",
+    "x_runtime.gemspec"
   ]
   s.homepage = "http://github.com/charlescui/x_runtime"
   s.licenses = ["MIT"]
@@ -50,20 +51,17 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<rack>, [">= 0"])
       s.add_runtime_dependency(%q<rake>, [">= 0"])
       s.add_runtime_dependency(%q<jeweler>, [">= 0"])
-      s.add_runtime_dependency(%q<active_support>, [">= 0"])
       s.add_runtime_dependency(%q<redis>, ["~> 3.0.1"])
     else
       s.add_dependency(%q<rack>, [">= 0"])
       s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
-      s.add_dependency(%q<active_support>, [">= 0"])
       s.add_dependency(%q<redis>, ["~> 3.0.1"])
     end
   else
     s.add_dependency(%q<rack>, [">= 0"])
     s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
-    s.add_dependency(%q<active_support>, [">= 0"])
     s.add_dependency(%q<redis>, ["~> 3.0.1"])
   end
 end
