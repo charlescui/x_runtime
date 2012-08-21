@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "x_runtime"
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["\u{5d14}\u{5ce5}"]
@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "lib/x_runtime.rb",
-    "lib/x_runtime/array.rb",
     "lib/x_runtime/data_set.rb",
     "lib/x_runtime/middleware.rb",
     "lib/x_runtime/portal.rb",
