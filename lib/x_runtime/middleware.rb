@@ -1,11 +1,12 @@
 module XRuntime
   class Middleware
-    
+    attr_accessor :auth
     # threshold => ms
-    def initialize(app, threshold, redis)
+    def initialize(app, threshold, redis, &auth)
       @app = app
       @threshold = threshold.to_f
       @redis = redis
+      @auth = auth
       XRuntime.middleware = self
     end
     

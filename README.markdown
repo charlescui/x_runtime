@@ -40,14 +40,18 @@ XRuntime是一个Rack的middleware,配合Redis用来分析Http Server每个URI�
 
 收集数据 `config.ru`:  
 
-    use Rack::XRuntime, 100, Redis.connect(:url => "redis://localhost:6380/")
+``` ruby
+use Rack::XRuntime, 10, Redis.connect(:url => "redis://localhost:6379/") do |name, password|
+  name == "cui" and password == "hello"
+end
+```
 
 查看数据 `config.ru`:  
 
 ``` ruby
 run Rack::URLMap.new \
   "/"       => Server.new,
-  "/xruntime" => XRuntime::Server.new{|name, password|name == "cui" and password == "hello"}
+  "/xruntime" => XRuntime::Server.new
 ```
 
 ### Rails3
@@ -55,13 +59,15 @@ run Rack::URLMap.new \
 收集数据 `config/environment.rb`:   
 
 ``` ruby
-config.middleware.insert_after Rack::Runtime, Rack::XRuntime, 100, Redis.connect(:url => "redis://localhost:6380/")
+config.middleware.insert_after Rack::Runtime, Rack::XRuntime, 100, Redis.connect(:url => "redis://localhost:6380/") do |name, password|
+  name == "cui" and password == "hello"
+end
 ```
 
-查看数据 `config/route.rb`:   
+查看数据 `config/routes.rb`:   
 
 ``` ruby
-mount Rack::XRuntime.new{|name, password|name == "cui" and password == "hello"}, :at => "/xruntime"
+mount Rack::XRuntime, :at => "/xruntime"
 ```
 
 ### Test

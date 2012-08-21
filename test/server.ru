@@ -8,7 +8,9 @@ require "#{File.dirname(__FILE__)}/../lib/x_runtime"
 class Server < Sinatra::Base
   # use XRuntime::Middleware, 10, Redis.connect(:url => "redis://localhost:6380/")
   # XRuntime::Middleware is same as Rack::XRuntime
-  use Rack::XRuntime, 10, Redis.connect(:url => "redis://localhost:6379/")
+  use Rack::XRuntime, 10, Redis.connect(:url => "redis://localhost:6379/") do |name, password|
+    name == "cui" and password == "hello"
+  end
 
   get /.*/ do
     # sleep(1)
@@ -20,4 +22,4 @@ end
 # Use with basic auth
 run Rack::URLMap.new \
   "/"       => Server.new,
-  "/xruntime" => XRuntime::Server.new{|name, password|name == "cui" and password == "hello"}
+  "/xruntime" => XRuntime::Server.new
