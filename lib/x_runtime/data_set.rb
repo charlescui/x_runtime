@@ -8,6 +8,9 @@ module XRuntime
       @key_amount = "#{@key}::Amount"
       @key_average = "#{@key}::Average"
       @script = script
+      # 预先加载Lua脚本
+      @script.sha
+      @data = []
     end
     
     # {key => {:score => score, :count => count, :average => average}}
@@ -40,7 +43,15 @@ module XRuntime
     end
     
     def add(member, score)
-      @script.evalsha([@key], [member, score])
+      @data.push([member, score])
+      # 如果@data数据达到一定数量，则一起插入redis
+      if @data.size >= 50
+        @script.redis.multi do
+          while (data = @data.pop) do
+            @script.evalsha([@key], [data[0], data[1]])
+          end
+        end
+      end
     end
   end#end of DataSet
 end
