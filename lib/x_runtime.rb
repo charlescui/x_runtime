@@ -4,8 +4,6 @@ require "redis"
 require "digest"
 require "fileutils"
 
-require_relative "x_runtime/array"
-
 $:.unshift(File.dirname(__FILE__))
 
 module XRuntime
