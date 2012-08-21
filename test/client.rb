@@ -4,7 +4,7 @@ def alpha
 end
 
 def rand_url(size=1)
-  "http://localhost:4567/#{(1..size).to_a.inject(''){|s,t|s+=alpha[rand(alpha.size-1)].to_s}}"
+  "http://localhost:9292/#{(1..size).to_a.inject(''){|s,t|s+=alpha[rand(alpha.size-1)].to_s}}"
 end
 
 100.times do

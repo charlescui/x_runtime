@@ -1,12 +1,12 @@
 module XRuntime
   class Middleware
+    
     # threshold => ms
-    def initialize(app, threshold, redis, &auth)
+    def initialize(app, threshold, redis)
       @app = app
       @threshold = threshold.to_f
       @redis = redis
-      @portal = Portal.new(ds)
-      @portal = Rack::Auth::Basic.new(@portal, &auth) if block_given?
+      XRuntime.middleware = self
     end
     
     def ds
@@ -16,16 +16,12 @@ module XRuntime
     def script
       @script ||= Script.new(@redis)
     end
-
-    def call(env)
-      if env['REQUEST_PATH'] == "/xruntime"
-        call_portal(env)
-      else
-        call_app(env)
-      end
+  
+    def redis_key
+      @key ||= "#{XRuntime::NameSpace}::#{@threshold}"
     end
   
-    def call_app(env)
+    def call(env)
       start_time = Time.now
       status, headers, body = @app.call(env)
       request_time = (Time.now - start_time).to_f*1000
@@ -36,17 +32,9 @@ module XRuntime
     
       [status, headers, body]
     end
-  
-    def call_portal(env)
-      @portal.call(env)
-    end
     
     def logredis(cost,uri)
       ds.add(uri, cost)
-    end
-  
-    def redis_key
-      @key ||= "#{XRuntime::NameSpace}::#{@threshold}"
     end
   
   end#end of Middleware

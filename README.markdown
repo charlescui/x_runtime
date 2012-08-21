@@ -30,26 +30,45 @@ XRuntime是一个Rack的middleware,配合Redis用来分析Http Server每个URI�
 可以指定XRuntime使用的Redis的key前缀或者叫命名空间:    
 `XRuntime::NameSpace = "RuntimeEx::Threshold"`  
 
-[http://localhost:4567/xruntime](/xruntime)支持Http basic auth验证:
+### Server
 
-    use Rack::XRuntime, 100, Redis.connect(:url => "redis://localhost:6380/") do |name, password|
-      name == "cui" and password == "hello"
-    end
+可以通过自带的Http页面查看请求数据，这些页面可以设置Http basic auth验证以保护起来	 
+只要在加载XRuntime::Server的时候，传递一个proc作为认证条件即可   
+可以在配置url路由的时候指定XRuntime::Server的挂载路径，然后就可以通过该路径访问页面   
 
 ### Sinatra
 
+收集数据 `config.ru`:  
+
     use Rack::XRuntime, 100, Redis.connect(:url => "redis://localhost:6380/")
+
+查看数据 `config.ru`:  
+
+``` ruby
+run Rack::URLMap.new \
+  "/"       => Server.new,
+  "/xruntime" => XRuntime::Server.new{|name, password|name == "cui" and password == "hello"}
+```
 
 ### Rails3
 
-    # config/environment.rb
-    config.middleware.insert_after Rack::Runtime, Rack::XRuntime, 100, Redis.connect(:url => "redis://localhost:6380/")
+收集数据 `config/environment.rb`:   
+
+``` ruby
+config.middleware.insert_after Rack::Runtime, Rack::XRuntime, 100, Redis.connect(:url => "redis://localhost:6380/")
+```
+
+查看数据 `config/route.rb`:   
+
+``` ruby
+mount Rack::XRuntime.new{|name, password|name == "cui" and password == "hello"}, :at => "/xruntime"
+```
 
 ### Test
 
 请先修改test/server.rb和test/client.rb中的Redis参数,我的地址是localhost:6380,这个请改为你的地址。
 
-* 先启动服务 `ruby test/server.rb`
+* 先启动服务 `rackup test/server.ru`
 * 再产生测试数据 `ruby test/client.rb`
 	
 执行完毕后可以打开浏览器访问[/xruntime](http://localhost:4567/xruntime),看是否已经准确的记录了一些数据
