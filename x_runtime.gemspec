@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "x_runtime"
-  s.version = "0.3.2"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["\u{5d14}\u{5ce5}"]
@@ -26,15 +26,15 @@ Gem::Specification.new do |s|
     "lib/x_runtime.rb",
     "lib/x_runtime/data_set.rb",
     "lib/x_runtime/middleware.rb",
-    "lib/x_runtime/portal.rb",
     "lib/x_runtime/redis.lua",
     "lib/x_runtime/script.rb",
+    "lib/x_runtime/server.rb",
     "lib/x_runtime/template.erb",
     "lib/x_runtime/template.rb",
     "lib/x_runtime/utils.rb",
     "test/client.rb",
     "test/helper.rb",
-    "test/server.rb",
+    "test/server.ru",
     "test/test_x_runtime.rb",
     "x_runtime.gemspec"
   ]
@@ -52,17 +52,20 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<rake>, [">= 0"])
       s.add_runtime_dependency(%q<jeweler>, [">= 0"])
       s.add_runtime_dependency(%q<redis>, ["~> 3.0.1"])
+      s.add_runtime_dependency(%q<sinatra>, [">= 0"])
     else
       s.add_dependency(%q<rack>, [">= 0"])
       s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<redis>, ["~> 3.0.1"])
+      s.add_dependency(%q<sinatra>, [">= 0"])
     end
   else
     s.add_dependency(%q<rack>, [">= 0"])
     s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<redis>, ["~> 3.0.1"])
+    s.add_dependency(%q<sinatra>, [">= 0"])
   end
 end
 
