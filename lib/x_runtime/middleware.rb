@@ -5,14 +5,15 @@ module XRuntime
     def initialize(app, redis, opts = {})
       @app = app
       @redis = redis
-      opts = {:threshold => 100.0, :cache => 50}.update opts
+      opts = {:threshold => 100.0, :cache => 50, :expire => 120}.update opts
       @cache = opts[:cache].to_i
+      @expire = opts[:expire].to_i
       @threshold = opts[:threshold].to_f
       XRuntime.middleware = self
     end
     
     def ds
-      @ds ||= DataSet.new(redis_key, script, @cache)
+      @ds ||= DataSet.new(redis_key, script, @cache, @expire)
     end
     
     def script

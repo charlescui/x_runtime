@@ -13,7 +13,8 @@ XRuntime是一个Rack的middleware,配合Redis用来分析Http Server每个URI�
 * 最近一次请求时间
 * 平均请求时间
 
-当请求积累到50次后，通过pipeline机制一次将数据插入Redis,避免每次请求都访问一下Redis.
+当请求积累到50次后，通过pipeline机制一次将数据插入Redis,避免每次请求都访问一下Redis.   
+引入了缓存超时机制后，当上一次将缓存写入时间和最新一次请求时间查过expire秒后，则将缓存写入Redis.
 
 ## Portal
 
@@ -22,14 +23,15 @@ XRuntime是一个Rack的middleware,配合Redis用来分析Http Server每个URI�
 
 ## Usage
 
-引入这个middleware需要两个参数:
+引入这个middleware需要的参数:
 
 1. redis对象
-2. :threshold,表示处理时间超过多少毫秒的请求才会被记录
-3. :cache,表示请求积累到多少条的时候才通过redis的pipeline机制插入到redis数据库中
+2. :threshold,表示处理时间超过多少毫秒的请求才会被记录,默认100毫秒
+3. :cache,表示请求积累到多少条的时候才通过redis的pipeline机制插入到redis数据库中,默认50
+4. :expire,如果上一次写入Redis和这次请求相差时间大于expire，则在本次请求时也将缓存数据写入Redis,默认120秒
 
 可以指定XRuntime使用的Redis的key前缀或者叫命名空间:    
-`XRuntime::NameSpace = "RuntimeEx::Threshold"`  
+`XRuntime::NameSpace = "XRuntime::Threshold"`  
 
 ### Server
 

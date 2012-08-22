@@ -7,7 +7,7 @@ require "fileutils"
 $:.unshift(File.dirname(__FILE__))
 
 module XRuntime
-  NameSpace     = "RuntimeEx::Threshold"
+  NameSpace     = "XRuntime::Threshold"
   extend        self
   attr_accessor :middleware
   

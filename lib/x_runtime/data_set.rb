@@ -2,7 +2,7 @@ module XRuntime
   class DataSet
     attr_accessor :data
     
-    def initialize(key, script, count)
+    def initialize(key, script, count, expire)
       raise ArgumentError, "Script must not nil and be valid!" unless script
       @key = key
       @key_counter = "#{@key}::Counter"
@@ -10,6 +10,8 @@ module XRuntime
       @key_average = "#{@key}::Average"
       @script = script
       @count = count
+      @expire = expire
+      @expired_at = Time.now.to_i
       # 预先加载Lua脚本
       @script.sha
       @data = []
@@ -47,7 +49,9 @@ module XRuntime
     def add(member, score)
       @data.push([member, score])
       # 如果@data数据达到一定数量，则一起插入redis
-      if @data.size >= @count
+      # 如果上一次写入Redis和这次请求相差时间大于@expire，则在本次请求时也将缓存数据写入Redis
+      if (@data.size >= @count) or (Time.now.to_i - @expired_at >= @expire)
+        @expired_at = Time.now.to_i
         @script.redis.multi do
           while (data = @data.pop) do
             @script.evalsha([@key], [data[0], data[1]])
