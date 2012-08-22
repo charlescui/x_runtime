@@ -24,8 +24,9 @@ XRuntime是一个Rack的middleware,配合Redis用来分析Http Server每个URI�
 
 引入这个middleware需要两个参数:
 
-1. threshold,表示处理时间超过多少毫秒的请求才会被记录
-2. redis对象
+1. redis对象
+2. :threshold,表示处理时间超过多少毫秒的请求才会被记录
+3. :cache,表示请求积累到多少条的时候才通过redis的pipeline机制插入到redis数据库中
 
 可以指定XRuntime使用的Redis的key前缀或者叫命名空间:    
 `XRuntime::NameSpace = "RuntimeEx::Threshold"`  
@@ -33,17 +34,19 @@ XRuntime是一个Rack的middleware,配合Redis用来分析Http Server每个URI�
 ### Server
 
 可以通过自带的Http页面查看请求数据，这些页面可以设置Http basic auth验证以保护起来	 
-只要在加载XRuntime::Server的时候，传递一个proc作为认证条件即可   
-可以在配置url路由的时候指定XRuntime::Server的挂载路径，然后就可以通过该路径访问页面   
+
+``` ruby
+XRuntime::Server.use(Rack::Auth::Basic) do |user, password|
+  user == 'cui' && password == "hello"
+end
+```
 
 ### Sinatra
 
 收集数据 `config.ru`:  
 
 ``` ruby
-use Rack::XRuntime, 10, Redis.connect(:url => "redis://localhost:6379/") do |name, password|
-  name == "cui" and password == "hello"
-end
+use Rack::XRuntime, Redis.connect(:url => "redis://localhost:6379/"), :threshold => 100.0, :cache => 50
 ```
 
 查看数据 `config.ru`:  
@@ -59,15 +62,13 @@ run Rack::URLMap.new \
 收集数据 `config/environment.rb`:   
 
 ``` ruby
-config.middleware.insert_after Rack::Runtime, Rack::XRuntime, 100, Redis.connect(:url => "redis://localhost:6380/") do |name, password|
-  name == "cui" and password == "hello"
-end
+config.middleware.use Rack::XRuntime, Redis.connect(:url => "redis://localhost:6380/"), :threshold => 100.0, :cache => 50
 ```
 
 查看数据 `config/routes.rb`:   
 
 ``` ruby
-mount Rack::XRuntime, :at => "/xruntime"
+mount XRuntime::Server, :at => "/xruntime"
 ```
 
 ### Test

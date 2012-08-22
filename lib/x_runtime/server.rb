@@ -1,15 +1,14 @@
+require "sinatra/base"
+
+if defined? Encoding
+  Encoding.default_external = Encoding::UTF_8
+end
+
 module XRuntime
-  class Server
-    def initialize(app=nil)
-      @server = lambda {|env|
-        @req = Rack::Request.new(env)
-        [200, {'Content-Type' => 'text/html'}, [Template.new(XRuntime.middleware.ds, :limit => (@req.params["limit"] ? @req.params["limit"].to_i : 20), :offset => @req.params["offset"].to_i).render]]
-      }
-      @server = Rack::Auth::Basic.new(@server, &XRuntime.middleware.auth) if XRuntime.middleware.auth
-    end
-        
-    def call(env)
-      @server.call(env)
+  class Server < Sinatra::Base    
+    get '/' do
+      @req = Rack::Request.new(env)
+      Template.new(XRuntime.middleware.ds, :limit => (@req.params["limit"] ? @req.params["limit"].to_i : 20), :offset => @req.params["offset"].to_i).render
     end
   end
 end

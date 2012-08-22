@@ -2,16 +2,17 @@ module XRuntime
   class Middleware
     attr_accessor :auth
     # threshold => ms
-    def initialize(app, threshold, redis, &auth)
+    def initialize(app, redis, opts = {})
       @app = app
-      @threshold = threshold.to_f
       @redis = redis
-      @auth = auth
+      opts = {:threshold => 100.0, :cache => 50}.update opts
+      @cache = opts[:cache].to_i
+      @threshold = opts[:threshold].to_f
       XRuntime.middleware = self
     end
     
     def ds
-      @ds ||= DataSet.new(redis_key, script)
+      @ds ||= DataSet.new(redis_key, script, @cache)
     end
     
     def script
@@ -26,7 +27,6 @@ module XRuntime
       start_time = Time.now
       status, headers, body = @app.call(env)
       request_time = (Time.now - start_time).to_f*1000
-
       if request_time >= @threshold
         logredis(request_time, env['REQUEST_URI']) rescue nil
       end
