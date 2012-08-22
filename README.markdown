@@ -41,6 +41,8 @@ XRuntime::Server.use(Rack::Auth::Basic) do |user, password|
 end
 ```
 
+增加一个子页面`/incache`,可以查看缓存中没有插入Redis的数据，但要记得这些缓存数据是在每个Server各自的进程中保存，每次访问这个页面，得到的缓存数据只代表该进程正在缓存的数据。
+
 ### Sinatra
 
 收集数据 `config.ru`:  

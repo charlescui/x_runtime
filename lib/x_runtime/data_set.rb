@@ -1,5 +1,6 @@
 module XRuntime
   class DataSet
+    attr_accessor :data
     
     def initialize(key, script, count)
       raise ArgumentError, "Script must not nil and be valid!" unless script
