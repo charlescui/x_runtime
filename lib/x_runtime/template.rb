@@ -1,3 +1,5 @@
+require "erb"
+
 module XRuntime
   class Template
     def initialize(ds, opts={})

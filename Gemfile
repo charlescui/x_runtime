@@ -1,6 +1,5 @@
 source "http://ruby.taobao.org"
 source "http://gems.github.com/"
-gem 'erb'
 gem 'rack'
 gem 'rake'
 gem 'jeweler'
