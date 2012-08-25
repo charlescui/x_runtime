@@ -7,7 +7,7 @@ XRuntime是一个Rack的middleware,配合Redis用来分析Http Server每个URI�
 * redis-server版本>2.6.x
 * redis(ruby gem)>3.0.1
 
-在Redis中，对每一个URI记录了以下信息:
+在Redis中，对每一个REQUEST_PATH记录了以下信息:
 * 请求总数
 * 总共请求时间
 * 最近一次请求时间
@@ -19,7 +19,7 @@ XRuntime是一个Rack的middleware,配合Redis用来分析Http Server每个URI�
 ## Portal
 
 可以访问Http Server的这个URL来实时查看当前记录的请求:[/xruntime](/xruntime)    
-这个页面是按照每个URI数次执行后的平均时间来排序的。
+这个页面是按照每个REQUEST_PATH数次执行后的平均时间来排序的。
 
 ## Usage
 
