@@ -1,6 +1,6 @@
 module XRuntime
   class Middleware
-    attr_accessor :auth
+    attr_accessor :auth, :redis
     # threshold => ms
     def initialize(app, redis, opts = {})
       @app = app

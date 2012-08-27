@@ -13,7 +13,7 @@ module XRuntime
     
     get '/' do
       @req = Rack::Request.new(env)
-      Template.new(XRuntime.middleware.ds, :limit => (@req.params["limit"] ? @req.params["limit"].to_i : 20), :offset => @req.params["offset"].to_i).render
+      Template.new(XRuntime.m.ds, :limit => (@req.params["limit"] ? @req.params["limit"].to_i : 20), :offset => @req.params["offset"].to_i).render
     end
     
     get '/incache' do
@@ -26,5 +26,11 @@ module XRuntime
         }
       }.to_json
     end
-  end
+    
+    get '/profiler' do
+      @req = Rack::Request.new(env)
+      Template.new(XRuntime.p.ds, :limit => (@req.params["limit"] ? @req.params["limit"].to_i : 20), :offset => @req.params["offset"].to_i).render
+    end
+    
+  end#end of server
 end

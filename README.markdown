@@ -33,7 +33,9 @@ XRuntime是一个Rack的middleware,配合Redis用来分析Http Server每个URI�
 可以指定XRuntime使用的Redis的key前缀或者叫命名空间:    
 `XRuntime::NameSpace = "XRuntime::Threshold"`  
 
-### Server
+### Middleware
+
+#### Server
 
 可以通过自带的Http页面查看请求数据，这些页面可以设置Http basic auth验证以保护起来	 
 
@@ -45,7 +47,7 @@ end
 
 增加一个子页面`/incache`,可以查看缓存中没有插入Redis的数据，但要记得这些缓存数据是在每个Server各自的进程中保存，每次访问这个页面，得到的缓存数据只代表该进程正在缓存的数据。
 
-### Sinatra
+#### Sinatra
 
 收集数据 `config.ru`:  
 
@@ -61,7 +63,7 @@ run Rack::URLMap.new \
   "/xruntime" => XRuntime::Server.new
 ```
 
-### Rails3
+#### Rails3
 
 收集数据 `config/environment.rb`:   
 
@@ -73,6 +75,32 @@ config.middleware.use Rack::XRuntime, Redis.connect(:url => "redis://localhost:6
 
 ``` ruby
 mount XRuntime::Server, :at => "/xruntime"
+```
+
+### Profiler
+
+这个功能用来将web server中一段代码的执行时间记录下来以供分析    
+
+需要传递两个参数   
+
+* 一个作为这块代码的标示:key
+* 另外一个是proc代码片段
+
+调用时使用:`XRuntime.profiler.log(key){...}`或者简写`XRuntime.p.log(key){...}`    
+
+返回值是代码块的返回值，不影响原有逻辑。
+
+#### Server
+
+通过这个地址可以查看运行结果:`\profiler`
+
+#### Rails3 && Sinatra
+
+``` ruby
+XRuntime.p.log("/index") do
+  sleep(0.01*rand(10))
+  "Hello, I'am x_runtime"
+end
 ```
 
 ### Test
