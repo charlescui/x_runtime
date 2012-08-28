@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>XRuntime</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+  	<div class="row">
+  		<div class="span9">
+  			<a href='<%= path_prefix %>/'><h1>XRuntime</h1></a>
+  		</div>
+  	</div>
+	
+    <h2>Profiler Report</h2>
+    <script src="js/bootstrap.min.js"></script>
+	
+	<table class="table table-striped">
+		<thead>
+			<th>URI</th>
+			<th>Count</th>
+			<th>Last</th>
+			<th>Average</th>
+		</thead>
+		<% @data.each do |member, hash| %>
+		<tr>
+			<td><a href=<%= member %>><%= member %></a></td>
+			<td><%= hash[:count]%></td>
+		    <td>
+				<%= hash[:latest] %>ms
+				<i class="<%= hash[:latest].to_f > hash[:average].to_f ? "icon-arrow-up" : "icon-arrow-down"%>"/>
+			</td>
+			<td><%= hash[:average]%>ms</td>
+			<td>
+				<a href='<%= "#{url_path('/p/del')}?member=#{member}" %>'  class="icon-remove">
+				</a>
+			</td>
+		</tr>
+		<% end %>
+	</table>
+	
+	<div class="pagination">
+	  <ul>
+	    <li><a href="<%= current_page %>?limit=<%= @limit %>&offset=<%= @offset - @limit %>">Prev</a></li>
+	    <li><a href="<%= current_page %>?limit=<%= @limit %>&offset=<%= @offset + @limit %>">Next</a></li>
+	  </ul>
+	</div>
+	
+  </body>
+</html>

@@ -12,8 +12,6 @@ module XRuntime
       @count = count
       @expire = expire
       @expired_at = Time.now.to_i
-      # 预先加载Lua脚本
-      @script.sha
       @data = []
     end
     
@@ -54,10 +52,15 @@ module XRuntime
         @expired_at = Time.now.to_i
         @script.redis.multi do
           while (data = @data.pop) do
-            @script.evalsha([@key], [data[0], data[1]])
+            @script.evalsha(:add, [@key], [data[0], data[1]])
           end
         end
       end
     end
+    
+    def del(member)
+      @script.evalsha(:del, [@key], [member])
+    end
+    
   end#end of DataSet
 end

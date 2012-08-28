@@ -92,7 +92,7 @@ mount XRuntime::Server, :at => "/xruntime"
 
 #### Server
 
-通过这个地址可以查看运行结果:`\profiler`
+通过这个地址可以查看运行结果:`/p`
 
 #### Rails3 && Sinatra
 

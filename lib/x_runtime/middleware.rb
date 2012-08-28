@@ -29,14 +29,14 @@ module XRuntime
       status, headers, body = @app.call(env)
       request_time = (Time.now - start_time).to_f*1000
       if request_time >= @threshold
-        logredis(request_time, env['REQUEST_PATH']) rescue nil
+        logredis(request_time, env['REQUEST_PATH'])
       end
     
       [status, headers, body]
     end
     
     def logredis(cost,uri)
-      ds.add(uri, cost)
+      ds.add(uri, cost) rescue nil
     end
   
   end#end of Middleware

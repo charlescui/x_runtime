@@ -30,7 +30,7 @@ module XRuntime
     def logredis(key, &blk)
       raise ArgumentError, "Need a block of code for profile." unless blk
       cost, result = call(&blk)
-      ds.add(key, cost)
+      ds.add(key, cost) rescue nil
       return result
     end
     

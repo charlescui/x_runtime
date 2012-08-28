@@ -29,7 +29,6 @@ module XRuntime
   autoload :DataSet,    "x_runtime/data_set"
   autoload :Script,     "x_runtime/script"
   autoload :Server,     "x_runtime/server"
-  autoload :Template,   "x_runtime/template"
   autoload :Utils,      "x_runtime/utils"
   autoload :Profiler,    "x_runtime/profiler"
 end
