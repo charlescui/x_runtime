@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "x_runtime"
-  s.version = "0.9.0"
+  s.version = "1.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["\u{5d14}\u{5ce5}"]
-  s.date = "2012-08-27"
+  s.date = "2012-08-28"
   s.description = "\u{7531}\u{4e8e}\u{4f7f}\u{7528}\u{5230}Redis\u{7684}lua script,\u{6240}\u{4ee5}\u{9700}\u{8981}\u{4f60}\u{7684}Redis\u{670d}\u{52a1}\u{652f}\u{6301},redis-server\u{7248}\u{672c}>2.6.x,redis(ruby gem)>3.0.1."
   s.email = "zheng.cuizh@gmail.com"
   s.extra_rdoc_files = [
@@ -17,21 +17,36 @@ Gem::Specification.new do |s|
     "README.markdown"
   ]
   s.files = [
+    ".DS_Store",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
     "README.markdown",
     "Rakefile",
     "VERSION",
+    "lib/.DS_Store",
     "lib/x_runtime.rb",
+    "lib/x_runtime/.DS_Store",
     "lib/x_runtime/data_set.rb",
+    "lib/x_runtime/lua/add.lua",
+    "lib/x_runtime/lua/del.lua",
     "lib/x_runtime/middleware.rb",
     "lib/x_runtime/profiler.rb",
-    "lib/x_runtime/redis.lua",
     "lib/x_runtime/script.rb",
     "lib/x_runtime/server.rb",
-    "lib/x_runtime/template.erb",
-    "lib/x_runtime/template.rb",
+    "lib/x_runtime/server/.DS_Store",
+    "lib/x_runtime/server/public/.DS_Store",
+    "lib/x_runtime/server/public/css/.DS_Store",
+    "lib/x_runtime/server/public/css/bootstrap-responsive.min.css",
+    "lib/x_runtime/server/public/css/bootstrap.min.css",
+    "lib/x_runtime/server/public/img/.DS_Store",
+    "lib/x_runtime/server/public/img/glyphicons-halflings-white.png",
+    "lib/x_runtime/server/public/img/glyphicons-halflings.png",
+    "lib/x_runtime/server/public/js/.DS_Store",
+    "lib/x_runtime/server/public/js/bootstrap.min.js",
+    "lib/x_runtime/server/views/index.erb",
+    "lib/x_runtime/server/views/m.erb",
+    "lib/x_runtime/server/views/p.erb",
     "lib/x_runtime/utils.rb",
     "test/client.rb",
     "test/helper.rb",
