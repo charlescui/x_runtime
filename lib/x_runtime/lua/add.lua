@@ -1,9 +1,9 @@
 local path = ARGV[1];
 local score = tonumber(ARGV[2])
 local key = KEYS[1]
-local key_counter = string.format("%s::Counter",key)
-local key_amount = string.format("%s::Amount",key)
-local key_average = string.format("%s::Average",key)
+local key_counter = key.."::Counter"
+local key_amount = key.."::Amount"
+local key_average = key.."::Average"
 
 -- 记录最新一次请求的耗时
 redis.call('zadd',key,score,path)
