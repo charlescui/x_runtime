@@ -125,6 +125,11 @@ log_format timing '$remote_addr - $remote_user [$time_local] "$status" $request 
 
 最主要的是这个`probe $upstream_http_xx_runtime`
 
+#### Rails
+
+在Rails中使用探针的时候，可以统计从请求开始处理时到当前探针点之间，所有ActiveRecord(数据层)消耗的时间，用来排查mysql等db性能有所帮助。   
+__注意__一定要写在render之前，因为render调用会触发cleanup_view_runtime，导致ActiveRecord计数器被清空。   
+
 ### Test
 
 请先修改test/server.rb和test/client.rb中的Redis参数,我的地址是localhost:6380,这个请改为你的地址。

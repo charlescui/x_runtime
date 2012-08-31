@@ -32,7 +32,8 @@ module XRuntime
         
         if headers[PROBELATESTFLAG]
           last_probe = headers[PROBELATESTFLAG].to_f
-          headers[PROBEFLAG] += ",#{"%06f"%(Time.now.to_f - last_probe)}"
+          headers[PROBEFLAG] += ",#{"%.03f"%((Time.now.to_f - last_probe)*1000)}ms"
+          headers[PROBEFLAG] += " AR:#{"%.03f"%ActiveRecord::LogSubscriber.runtime}ms" if (defined? ActiveRecord::LogSubscriber)
         end
         
         headers[PROBELATESTFLAG] = Time.now.to_f.to_s
