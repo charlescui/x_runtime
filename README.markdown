@@ -103,6 +103,28 @@ XRuntime.p.log("/index") do
 end
 ```
 
+### Probe探针
+
+探针的用途:
+* 在服务端请求最开始的地方打点比如`before_filter require_user`
+* 在服务端业务有性能陷阱的地方打点
+* 在Nginx或者Apache日志中输出记录，在日志中可以看到每个请求的路径，及其对应的业务路径中每个探针点之间的请求时长
+
+这样做的好处是:   
+探针会产生大量的数据，并且这些数据需要记录下来以供分析，如果需要Rails或者Sinatra来处理这些数据会降低自身业务的性能，   
+不如将这些数据放在请求头中，当Nginx或者Apache这些前段服务器记录日志的时候将其写入日志中，在我们分析日志的时候就能发现某些API的某些加过探针的运算消耗。    
+
+在Rails或者Sinatra中可以通过如下方法使用探针:`XRuntime::Utils.probe(headers)`    
+
+Nginx日志格式:
+```
+log_format timing '$remote_addr - $remote_user [$time_local] "$status" $request "$http_user_agent" '
+                          'upstream_response_time $upstream_response_time '
+                          'msec $msec request_time $request_time probe $upstream_http_xx_runtime';
+```
+
+最主要的是这个`probe $upstream_http_xx_runtime`
+
 ### Test
 
 请先修改test/server.rb和test/client.rb中的Redis参数,我的地址是localhost:6380,这个请改为你的地址。
