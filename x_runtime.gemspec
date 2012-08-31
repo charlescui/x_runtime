@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "x_runtime"
-  s.version = "1.0.0"
+  s.version = "1.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["\u{5d14}\u{5ce5}"]
-  s.date = "2012-08-28"
+  s.date = "2012-08-31"
   s.description = "\u{7531}\u{4e8e}\u{4f7f}\u{7528}\u{5230}Redis\u{7684}lua script,\u{6240}\u{4ee5}\u{9700}\u{8981}\u{4f60}\u{7684}Redis\u{670d}\u{52a1}\u{652f}\u{6301},redis-server\u{7248}\u{672c}>2.6.x,redis(ruby gem)>3.0.1."
   s.email = "zheng.cuizh@gmail.com"
   s.extra_rdoc_files = [
